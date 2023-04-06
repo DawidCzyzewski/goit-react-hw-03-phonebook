@@ -1,11 +1,13 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
+import styles from './Form.module.css';
 
 export class Form extends Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     name: PropTypes.string,
+    number: PropTypes.number,
   };
 
   state = {
@@ -13,18 +15,19 @@ export class Form extends Component {
     number: '',
   };
 
-  // Function to catch every change
   handleChange = event => {
     const { name, value } = event.target;
+
     this.setState({
       [name]: value,
     });
   };
 
-  // Function to submit change to storage
   onSubmit = event => {
     event.preventDefault();
+
     const { handleSubmit } = this.props;
+
     const contact = {
       name: this.state.name,
       id: nanoid(),
@@ -36,9 +39,10 @@ export class Form extends Component {
 
   render() {
     const { name } = this.props;
+
     return (
       <>
-        <form>
+        <form className={styles.form}>
           <input
             type="text"
             name="name"
@@ -46,6 +50,7 @@ export class Form extends Component {
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             onChange={this.handleChange}
             value={name}
+            className={styles.input}
             required
           />
           <input
@@ -55,9 +60,14 @@ export class Form extends Component {
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             onChange={this.handleChange}
             value={this.state.number}
+            className={styles.input}
             required
           />
-          <button type="submit" onClick={this.onSubmit}>
+          <button
+            type="submit"
+            onClick={this.onSubmit}
+            className={styles.button}
+          >
             Add contact
           </button>
         </form>
@@ -72,10 +82,17 @@ export class Form extends Component {
 
 // import { Component } from 'react';
 // import { nanoid } from 'nanoid';
+// import PropTypes from 'prop-types';
+
 // // import { Notify } from 'notiflix';
 // // import { DebounceInput } from 'react-debounce-input';
 
 // export class Form extends Component {
+//   static propTypes = {
+//     handleSubmit: PropTypes.func.isRequired,
+//     name: PropTypes.string,
+//   };
+
 //   state = {
 //     name: '',
 //     number: '',
@@ -146,11 +163,12 @@ export class Form extends Component {
 
 //     return (
 //       <>
-//         <form>
+//         <form className={styles.form}>
 //           {/* <DebounceInput
 //             debounceTimeout={300} */}
 
 //           <input
+// className={styles.input}
 //             type="text"
 //             name="name"
 //             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -168,9 +186,10 @@ export class Form extends Component {
 //             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
 //             onChange={this.handleChange}
 //             value={this.state.number}
+// className={styles.input}
 //             required
 //           />
-//           <button type="submit" onClick={this.onSubmit}>
+//           <button type="submit" onClick={this.onSubmit} className={styles.button}>
 //             Add contact
 //           </button>
 //         </form>

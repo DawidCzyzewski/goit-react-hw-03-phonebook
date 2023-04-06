@@ -1,5 +1,6 @@
-import PropTypes from 'prop-types';
 import { Component } from 'react';
+import PropTypes from 'prop-types';
+import styles from './Contacts.module.css';
 
 export class Contacts extends Component {
   static propTypes = {
@@ -7,17 +8,19 @@ export class Contacts extends Component {
     remove: PropTypes.func,
     filter: PropTypes.string,
   };
+
   render() {
     const { contacts, remove, filter } = this.props;
 
     return (
       <>
-        <ul>
+        <ul className={styles.listContainer}>
           {contacts.map(({ number, name, id }) =>
             name.toLowerCase().includes(filter.toLowerCase()) ? (
-              <li key={id}>
+              <li className={styles.listElement} key={id}>
                 {name}: {number}
                 <button
+                  className={styles.button}
                   key={id}
                   type="button"
                   onClick={() => {
@@ -40,23 +43,31 @@ export class Contacts extends Component {
 // --------------------------------------Code with coments under and tests----------
 
 // import { Component } from 'react';
+// import PropTypes from 'prop-types';
+// import styles from './Contacts.module.css';
 
 // export class Contacts extends Component {
+//   static propTypes = {
+//     contacts: PropTypes.array,
+//     remove: PropTypes.func,
+//     filter: PropTypes.string,
+//   };
+
 //   render() {
 //     // console.log(this.props);
 //     const { contacts, remove, filter } = this.props;
 
 //     // return (
 //     //   <>
-//     //     <ul>
+//     //     <ul className={styles.listContainer}>
 //     //       {contacts.forEach(({ number, name, id }) => {
 //     //         if (name.toLowerCase().includes(filter.toLowerCase())) {
 //     //           return (
-//     //             <li>
-//     //               <li key={id}>
+//     //             <li className={styles.listElement}
+//     //               key={id}>
 //     //                 {name}: {number}
-//     //               </li>
-//     //               <button
+//     //               </key=>
+//     //               <button className={styles.button}
 //     //                 key={id}
 //     //                 type="button"
 //     //                 onClick={() => {
@@ -85,7 +96,7 @@ export class Contacts extends Component {
 //                   key={id}
 //                   type="button"
 //                   onClick={() => {
-//                     //   console.log(contact.id);
+//                     console.log('Contacts, id: ', id);
 //                     remove(id);
 //                   }}
 //                 >

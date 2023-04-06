@@ -11,6 +11,14 @@ export class App extends Component {
     filter: '',
   };
 
+  addContactsToStorage = contact => {
+    try {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    } catch (error) {
+      console.log('This is problem with add to localstorage: ', error);
+    }
+  };
+
   handleSubmit = contact => {
     const { id, name, number } = contact;
     if (
@@ -41,6 +49,25 @@ export class App extends Component {
     }));
     Notify.success(`Contact "${objectToDelete}" was deleted.`);
   };
+
+  componentDidMount() {
+    try {
+      const contacts = JSON.parse(localStorage.getItem('contacts'));
+      if (contacts) {
+        this.setState({
+          contacts: contacts,
+        });
+      }
+    } catch (error) {
+      console.log('Houston! We have a problem with mounting: ', error);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts.length !== this.state.contacts.length) {
+      this.addContactsToStorage();
+    }
+  }
 
   render() {
     const { contacts, filter } = this.state;
@@ -80,12 +107,23 @@ export class App extends Component {
 //     filter: '',
 //   };
 
-//   handleSubmit = contact => {
-//     // console.log(contact);
-//     const { id, name, number } = contact;
-//     // console.log(name, id, number);
+//   addContactsToStorage = contact => {
+//     try {
+//       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+//     } catch (error) {
+//       console.log('This is problem: ', error);
+//     }
+//   };
 
-//     // console.log(this.state.contacts);
+//   handleSubmit = contact => {
+//     console.log('func handleSubmit, contact: ', contact);
+//     const { id, name, number } = contact;
+//     console.log('func handleSubmit, name, id, number: ', name, id, number);
+
+//     console.log(
+//       'func handleSubmit, this.state.contacts: ',
+//       this.state.contacts
+//     );
 //     // this.state.contacts = []
 //     //   ? this.setState({
 //     //       contacts: [{ id: id, name: name, number: number }],
@@ -110,6 +148,7 @@ export class App extends Component {
 //           { id: id, name: name, number: number },
 //         ],
 //       }));
+//       // this.addContactsToStorage(this.state.contacts);
 //     }
 //   };
 
@@ -119,11 +158,31 @@ export class App extends Component {
 //     const objectToDelete = this.state.contacts.find(
 //       ({ id }) => id === obj
 //     ).name;
+//     console.log('func deleteObj, objectToDelete: ', objectToDelete);
 //     this.setState(prevState => ({
 //       contacts: prevState.contacts.filter(contact => contact.id !== obj),
 //     }));
 //     Notify.success(`Contact "${objectToDelete}" was deleted.`);
 //   };
+
+//   componentDidMount() {
+//     try {
+//       const contacts = JSON.parse(localStorage.getItem('contacts'));
+//       if (contacts) {
+//         this.setState({
+//           contacts: contacts,
+//         });
+//       }
+//     } catch (error) {
+//       console.log('We have a problem: ', error);
+//     }
+//   }
+
+//   componentDidUpdate(prevProps, prevState) {
+//     if (prevState.contacts.length !== this.state.contacts.length) {
+//       this.addContactsToStorage();
+//     }
+//   }
 
 //   render() {
 //     const { contacts, filter } = this.state;
