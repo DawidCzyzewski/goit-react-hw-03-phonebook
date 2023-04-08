@@ -42,7 +42,7 @@ export class Form extends Component {
 
     return (
       <>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={this.onSubmit}>
           <input
             type="text"
             name="name"
@@ -63,11 +63,7 @@ export class Form extends Component {
             className={styles.input}
             required
           />
-          <button
-            type="submit"
-            onClick={this.onSubmit}
-            className={styles.button}
-          >
+          <button type="submit" className={styles.button}>
             Add contact
           </button>
         </form>
